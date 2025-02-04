@@ -42,7 +42,24 @@ namespace MKP_Modbus_Data
 
         bool tasks_started = false;  
         bool connected = false;
-
+        private void connect_to_comport(ref bool connected)
+        {
+            if (!connected)
+            {
+                if (_modbusRTU.connect_modbus_port())
+                {
+                    _modbusRTU.create_modbus_master();
+                    but_port_connect.Text = "Отключиться от Com порта";
+                    connected = true;
+                }
+            }
+            else
+            {
+                _modbusRTU.disconnect_modbus_port();
+                but_port_connect.Text = "Подключиться к Com порту";
+                connected = false;
+            }
+        }
         private async Task<ushort> get_program_state(byte slave_id, ushort state_address)
         {
             ushort[] program_run = new ushort[1];
@@ -203,33 +220,26 @@ namespace MKP_Modbus_Data
                 Convert.ToInt16(_ini.IniReadValue("PLC_Info", "rack")), Convert.ToInt16(_ini.IniReadValue("PLC_Info", "slot")));
 
             _cancel_token = new CancellationTokenSource();
+
+            try
+            {
+                connect_to_comport(ref connected);
+
+                if (connected)
+                    but_turn_on_data_coll.PerformClick();
+            }
+            catch (Exception ex){}
+         
         }
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             _plc_control.disconnect();
             _modbusRTU.disconnect_modbus_port();
         }
-
         private void but_port_connect_click(object sender, EventArgs e)
         {
-           
-            if (!connected)
-            {
-                if (_modbusRTU.connect_modbus_port())
-                {
-                    _modbusRTU.create_modbus_master();
-                    but_port_connect.Text = "Отключиться от Com порта";
-                    connected = true;
-                }
-            }
-            else
-            {
-                _modbusRTU.disconnect_modbus_port();
-                but_port_connect.Text = "Подключиться к Com порту";
-                connected = false;
-            }
+            connect_to_comport(ref connected);
         }
-
         private async void but_turn_on_data_coll_Click(object sender, EventArgs e)
         {
             if (tasks_started)
@@ -247,18 +257,16 @@ namespace MKP_Modbus_Data
                 _cancel_token = new CancellationTokenSource();
                 tasks_started = true;
                 but_turn_on_data_coll.Text = "Отключить сбор \n данных";
-                
-                await _plc_control.connect_async(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false); ;
-                await get_data_from_all_mkp(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false); ;
+
+                await _plc_control.connect_async(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false);
+                await get_data_from_all_mkp(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false);
                 return;
             }
         }
-
         private void close_but_Click(object sender, EventArgs e)
         {
             Close();
         }
-
         private void min_but_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
