@@ -41,17 +41,20 @@ namespace MKP_Modbus_Data
                 _plc.Close();
         }
 
-        public async Task<object> read_dbw_async(string variable)
+        public async Task<object> read_db_async(string variable)
         {
             return await _plc.ReadAsync(variable);
         }
-        public async Task write_dbw_async(string variable, UInt16 new_value)
+        public async Task write_db_async(string variable, object new_value)
         {
             await _plc.WriteAsync(variable, new_value);
         }
 
         public bool get_state_plc_connected()
         {
+            if (_plc == null)
+                return false;
+
             return _plc.IsConnected;
         }
 

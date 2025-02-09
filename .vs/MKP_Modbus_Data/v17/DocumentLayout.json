@@ -36,9 +36,10 @@
               "RelativeDocumentMoniker": "PLC_S7.cs",
               "ToolTip": "E:\\PROGRAMMING\\GIT\\MKP_Modbus_Data\\PLC_S7.cs",
               "RelativeToolTip": "PLC_S7.cs",
-              "ViewState": "AQIAAB0AAAAAAAAAAAAmwC8AAAAaAAAA",
+              "ViewState": "AQIAACIAAAAAAAAAAAAowDcAAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-22T16:30:46.503Z"
+              "WhenOpened": "2024-12-22T16:30:46.503Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -48,9 +49,10 @@
               "RelativeDocumentMoniker": "ModbusRTU.cs",
               "ToolTip": "E:\\PROGRAMMING\\GIT\\MKP_Modbus_Data\\ModbusRTU.cs",
               "RelativeToolTip": "ModbusRTU.cs",
-              "ViewState": "AQIAACYAAAAAAAAAAAAwwCwAAAAAAAAA",
+              "ViewState": "AQIAACcAAAAAAAAAAAAowCwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-22T16:17:27.496Z"
+              "WhenOpened": "2024-12-22T16:17:27.496Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -60,7 +62,7 @@
               "RelativeDocumentMoniker": "Main.cs",
               "ToolTip": "E:\\PROGRAMMING\\GIT\\MKP_Modbus_Data\\Main.cs",
               "RelativeToolTip": "Main.cs",
-              "ViewState": "AQIAANEAAAAAAAAAAAAIwOIAAAAAAAAA",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAIwNcAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-15T13:04:00.668Z",
               "EditorCaption": ""
@@ -71,10 +73,11 @@
               "Title": "Main.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "E:\\PROGRAMMING\\GIT\\MKP_Modbus_Data\\Main.cs",
               "RelativeDocumentMoniker": "Main.cs",
-              "ToolTip": "E:\\PROGRAMMING\\C#  Projects\\MKP_DATA\\MKP_Modbus_Data\\Main.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
-              "RelativeToolTip": "..\\..\\C#  Projects\\MKP_DATA\\MKP_Modbus_Data\\Main.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "ToolTip": "E:\\PROGRAMMING\\GIT\\MKP_Modbus_Data\\Main.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "RelativeToolTip": "Main.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-15T13:02:28.976Z"
+              "WhenOpened": "2024-12-15T13:02:28.976Z",
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
             }
           ]
         }

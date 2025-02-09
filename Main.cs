@@ -42,6 +42,51 @@ namespace MKP_Modbus_Data
 
         bool tasks_started = false;  
         bool connected = false;
+
+        string mkp1_run_status_db_adr;
+        string mkp1_pv_db_adr;
+        string mkp1_sp_db_adr;
+        string mkp2_run_status_db_adr;
+        string mkp2_pv_db_adr;
+        string mkp2_sp_db_adr;
+        string mkp3_run_status_db_adr;
+        string mkp3_pv_db_adr;
+        string mkp3_sp_db_adr;
+        string mkp4_run_status_db_adr;
+        string mkp4_pv_db_adr;
+        string mkp4_sp_db_adr;
+        string mkp5_run_status_db_adr;
+        string mkp5_pv_db_adr;
+        string mkp5_sp_db_adr;
+
+        string life_bit_db_adr;
+
+        private void load_data_from_inifile()
+        {
+            mkp1_run_status_db_adr = _ini.IniReadValue("PLC_Info", "Mkp1RunState");
+            mkp1_pv_db_adr = _ini.IniReadValue("PLC_Info", "Mkp1PV");
+            mkp1_sp_db_adr = _ini.IniReadValue("PLC_Info", "Mkp1SP");
+
+            mkp2_run_status_db_adr = _ini.IniReadValue("PLC_Info", "Mkp2RunState");
+            mkp2_pv_db_adr = _ini.IniReadValue("PLC_Info", "Mkp2PV");
+            mkp2_sp_db_adr = _ini.IniReadValue("PLC_Info", "Mkp2SP");
+
+            mkp3_run_status_db_adr = _ini.IniReadValue("PLC_Info", "Mkp3RunState");
+            mkp3_pv_db_adr = _ini.IniReadValue("PLC_Info", "Mkp3PV");
+            mkp3_sp_db_adr = _ini.IniReadValue("PLC_Info", "Mkp3SP");
+
+            mkp4_run_status_db_adr = _ini.IniReadValue("PLC_Info", "Mkp4RunState");
+            mkp4_pv_db_adr = _ini.IniReadValue("PLC_Info", "Mkp4PV");
+            mkp4_sp_db_adr = _ini.IniReadValue("PLC_Info", "Mkp4SP");
+
+            mkp5_run_status_db_adr = _ini.IniReadValue("PLC_Info", "Mkp5RunState");
+            mkp5_pv_db_adr = _ini.IniReadValue("PLC_Info", "Mkp5PV");
+            mkp5_sp_db_adr = _ini.IniReadValue("PLC_Info", "Mkp5SP");
+
+            life_bit_db_adr = _ini.IniReadValue("PLC_Info", "LifeBit");
+        }
+
+
         private void connect_to_comport(ref bool connected)
         {
             if (!connected)
@@ -137,28 +182,38 @@ namespace MKP_Modbus_Data
 
                 if (_plc_control.get_state_plc_connected())
                 {
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp1RunState"), MKR_1_state);
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp1PV"), MKP_1_data[0]);
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp1SP"), MKP_1_data[1]);
+                    await _plc_control.write_db_async(mkp1_run_status_db_adr, MKR_1_state);
+                    await _plc_control.write_db_async(mkp1_pv_db_adr, MKP_1_data[0]);
+                    await _plc_control.write_db_async(mkp1_sp_db_adr, MKP_1_data[1]);
 
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp2RunState"), MKR_2_state);
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp2PV"), MKP_2_data[0]);
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp2SP"), MKP_2_data[1]);
+                    await _plc_control.write_db_async(mkp2_run_status_db_adr, MKR_2_state);
+                    await _plc_control.write_db_async(mkp2_pv_db_adr, MKP_2_data[0]);
+                    await _plc_control.write_db_async(mkp2_sp_db_adr, MKP_2_data[1]);
 
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp3RunState"), MKR_3_state);
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp3PV"), MKP_3_data[0]);
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp3SP"), MKP_3_data[1]);
+                    await _plc_control.write_db_async(mkp3_run_status_db_adr, MKR_3_state);
+                    await _plc_control.write_db_async(mkp3_pv_db_adr, MKP_3_data[0]);
+                    await _plc_control.write_db_async(mkp3_sp_db_adr, MKP_3_data[1]);
 
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp4RunState"), MKR_4_state);
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp4PV"), MKP_4_data[0]);
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp4SP"), MKP_4_data[1]);
+                    await _plc_control.write_db_async(mkp4_run_status_db_adr, MKR_4_state);
+                    await _plc_control.write_db_async(mkp4_pv_db_adr, MKP_4_data[0]);
+                    await _plc_control.write_db_async(mkp4_sp_db_adr, MKP_4_data[1]);
 
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp5RunState"), MKR_5_state);
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp5PV"), MKP_5_data[0]);
-                    await _plc_control.write_dbw_async(_ini.IniReadValue("PLC_Info", "Mkp5SP"), MKP_5_data[1]);                    
+                    await _plc_control.write_db_async(mkp5_run_status_db_adr, MKR_5_state);
+                    await _plc_control.write_db_async(mkp5_pv_db_adr, MKP_5_data[0]);
+                    await _plc_control.write_db_async(mkp5_sp_db_adr, MKP_5_data[1]);
+
+
+                    //await _plc_control.read_db_async(_ini.IniReadValue("PLC_Info", "LifeBit"));
+                    if (Convert.ToBoolean(await _plc_control.read_db_async(life_bit_db_adr)))
+                    {
+                        await _plc_control.write_db_async(life_bit_db_adr, false);
+                    }
+                    else
+                    {
+                        await _plc_control.write_db_async(life_bit_db_adr, true);
+                    }
                 }
-
-                Thread.Sleep(1000);
+                Task.Delay(1000).Wait();
             }
         }
         private void Main_Load(object sender, EventArgs e)
@@ -225,6 +280,9 @@ namespace MKP_Modbus_Data
             {
                 connect_to_comport(ref connected);
 
+                timer_check_connect_to_plc.Enabled = true;
+                timer_check_connect_to_plc.Start();
+
                 if (connected)
                     but_turn_on_data_coll.PerformClick();
             }
@@ -239,6 +297,10 @@ namespace MKP_Modbus_Data
         private void but_port_connect_click(object sender, EventArgs e)
         {
             connect_to_comport(ref connected);
+        }
+        private async void but_connect_plc_Click(object sender, EventArgs e)
+        {
+            await _plc_control.connect_async(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false);
         }
         private async void but_turn_on_data_coll_Click(object sender, EventArgs e)
         {
@@ -258,7 +320,6 @@ namespace MKP_Modbus_Data
                 tasks_started = true;
                 but_turn_on_data_coll.Text = "Отключить сбор \n данных";
 
-                await _plc_control.connect_async(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false);
                 await get_data_from_all_mkp(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false);
                 return;
             }
@@ -270,6 +331,24 @@ namespace MKP_Modbus_Data
         private void min_but_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void Main_MouseDown(object sender, MouseEventArgs e)
+        {
+            base.Capture = false;
+            Message m = Message.Create(base.Handle, 0xa1, new IntPtr(2), IntPtr.Zero);
+            this.WndProc(ref m);
+        }
+        private void timer_check_connect_to_plc_Tick(object sender, EventArgs e)
+        {
+            if (_plc_control.get_state_plc_connected())
+            {
+                but_connect_plc.Text = "Отключиться \r\nот ПЛК";
+            }
+            else
+            {
+                but_connect_plc.Text = "Подключиться \r\nк ПЛК";
+            }
         }
     }
 }
