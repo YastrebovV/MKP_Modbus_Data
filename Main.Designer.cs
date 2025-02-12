@@ -109,7 +109,7 @@
             this.panel1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel1.Location = new System.Drawing.Point(14, 109);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(687, 171);
+            this.panel1.Size = new System.Drawing.Size(670, 171);
             this.panel1.TabIndex = 16;
             // 
             // lb_pv_id5
@@ -307,7 +307,7 @@
             // 
             this.min_but.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min_but.Image = global::MKP_Modbus_Data.Properties.Resources.icons8_minimize_window_48;
-            this.min_but.Location = new System.Drawing.Point(619, 20);
+            this.min_but.Location = new System.Drawing.Point(603, 20);
             this.min_but.Name = "min_but";
             this.min_but.Size = new System.Drawing.Size(38, 36);
             this.min_but.TabIndex = 19;
@@ -318,7 +318,7 @@
             // 
             this.close_but.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.close_but.Image = global::MKP_Modbus_Data.Properties.Resources.icons8_закрыть_окно;
-            this.close_but.Location = new System.Drawing.Point(663, 21);
+            this.close_but.Location = new System.Drawing.Point(647, 21);
             this.close_but.Name = "close_but";
             this.close_but.Size = new System.Drawing.Size(38, 36);
             this.close_but.TabIndex = 18;
@@ -346,7 +346,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            this.ClientSize = new System.Drawing.Size(714, 296);
+            this.ClientSize = new System.Drawing.Size(702, 296);
             this.Controls.Add(this.but_connect_plc);
             this.Controls.Add(this.min_but);
             this.Controls.Add(this.close_but);

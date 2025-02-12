@@ -85,8 +85,6 @@ namespace MKP_Modbus_Data
 
             life_bit_db_adr = _ini.IniReadValue("PLC_Info", "LifeBit");
         }
-
-
         private void connect_to_comport(ref bool connected)
         {
             if (!connected)
@@ -137,6 +135,10 @@ namespace MKP_Modbus_Data
                 MKP_data[1] = 0;
             }
             return MKP_data;
+        }
+        private async Task get_data_from_all_mkp()
+        {
+            await get_data_from_all_mkp(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false);
         }
         private async Task get_data_from_all_mkp(CancellationToken cancel_token)
         {
@@ -203,7 +205,6 @@ namespace MKP_Modbus_Data
                     await _plc_control.write_db_async(mkp5_sp_db_adr, MKP_5_data[1]);
 
 
-                    //await _plc_control.read_db_async(_ini.IniReadValue("PLC_Info", "LifeBit"));
                     if (Convert.ToBoolean(await _plc_control.read_db_async(life_bit_db_adr)))
                     {
                         await _plc_control.write_db_async(life_bit_db_adr, false);
@@ -216,6 +217,8 @@ namespace MKP_Modbus_Data
                 Task.Delay(1000).Wait();
             }
         }
+
+
         private void Main_Load(object sender, EventArgs e)
         {
             CpuType _cpu_Type = CpuType.S7300;
@@ -276,6 +279,8 @@ namespace MKP_Modbus_Data
 
             _cancel_token = new CancellationTokenSource();
 
+            load_data_from_inifile();
+
             try
             {
                 connect_to_comport(ref connected);
@@ -300,6 +305,7 @@ namespace MKP_Modbus_Data
         }
         private async void but_connect_plc_Click(object sender, EventArgs e)
         {
+          //  Task.Factory.StartNew()
             await _plc_control.connect_async(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false);
         }
         private async void but_turn_on_data_coll_Click(object sender, EventArgs e)
@@ -320,7 +326,8 @@ namespace MKP_Modbus_Data
                 tasks_started = true;
                 but_turn_on_data_coll.Text = "Отключить сбор \n данных";
 
-                await get_data_from_all_mkp(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false);
+               await Task.Run(get_data_from_all_mkp);
+               // await get_data_from_all_mkp(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false);
                 return;
             }
         }
