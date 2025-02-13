@@ -217,8 +217,6 @@ namespace MKP_Modbus_Data
                 Task.Delay(1000).Wait();
             }
         }
-
-
         private void Main_Load(object sender, EventArgs e)
         {
             CpuType _cpu_Type = CpuType.S7300;
@@ -305,7 +303,6 @@ namespace MKP_Modbus_Data
         }
         private async void but_connect_plc_Click(object sender, EventArgs e)
         {
-          //  Task.Factory.StartNew()
             await _plc_control.connect_async(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false);
         }
         private async void but_turn_on_data_coll_Click(object sender, EventArgs e)
@@ -326,8 +323,8 @@ namespace MKP_Modbus_Data
                 tasks_started = true;
                 but_turn_on_data_coll.Text = "Отключить сбор \n данных";
 
-               await Task.Run(get_data_from_all_mkp);
-               // await get_data_from_all_mkp(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false);
+                await Task.Run(get_data_from_all_mkp);
+               
                 return;
             }
         }
@@ -339,7 +336,6 @@ namespace MKP_Modbus_Data
         {
             this.WindowState = FormWindowState.Minimized;
         }
-
         private void Main_MouseDown(object sender, MouseEventArgs e)
         {
             base.Capture = false;

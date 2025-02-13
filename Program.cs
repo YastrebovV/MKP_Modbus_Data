@@ -12,9 +12,16 @@ namespace MKP_Modbus_Data
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            if (System.Diagnostics.Process.GetProcessesByName(Application.ProductName).Length > 1)
+            {
+                MessageBox.Show("Приложение уже запущено!!!");
+            }
+            else
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new Main());
+            }
         }
     }
 }
