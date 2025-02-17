@@ -26,10 +26,7 @@ namespace MKP_Modbus_Data
             {        
                 await _plc.OpenAsync(cancel_token).ConfigureAwait(continueOnCapturedContext: false); //попытка подключения к plc
             }
-            catch (Exception plc_ex)
-            {
-              //  MessageBox.Show(plc_ex.Message, "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            catch (Exception) { }
            
         }  //функция подключения к плс
         public void disconnect()
@@ -43,11 +40,22 @@ namespace MKP_Modbus_Data
 
         public async Task<object> read_db_async(string variable)
         {
-            return await _plc.ReadAsync(variable);
+            if (!_plc.IsConnected)
+                return null;
+
+            try
+            {
+                return await _plc.ReadAsync(variable);
+            }
+            finally { }
         }
         public async Task write_db_async(string variable, object new_value)
         {
-            await _plc.WriteAsync(variable, new_value);
+            try
+            {
+                if (_plc.IsConnected)
+                    await _plc.WriteAsync(variable, new_value);
+            }catch (Exception) { }
         }
 
         public bool get_state_plc_connected()

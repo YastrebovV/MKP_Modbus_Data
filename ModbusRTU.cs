@@ -43,20 +43,36 @@ namespace MKP_Modbus_Data
             return _port.IsOpen;
         }
 
+        public bool get_port_state()
+        {
+            if (_port == null)
+                return false;
+
+            return _port.IsOpen;
+        }
+
         public void create_modbus_master()
         {
             _modbus_master = ModbusSerialMaster.CreateRtu(_port);
         }
-        public async Task<ushort[]> read_input_registers(byte slaveId, ushort startAddress, ushort numOfPoints)
+        public async Task<ushort[]> async_read_input_registers(byte slaveId, ushort startAddress, ushort numOfPoints)
         {       
             return await _modbus_master.ReadInputRegistersAsync(slaveId, startAddress, numOfPoints); 
         }
 
-        public async Task<ushort[]> read_holding_registers(byte slaveId, ushort startAddress, ushort numOfPoints)
+        public ushort[] read_input_registers(byte slaveId, ushort startAddress, ushort numOfPoints)
+        {
+            return _modbus_master.ReadInputRegisters(slaveId, startAddress, numOfPoints);
+        }
+
+        public async Task<ushort[]> async_read_holding_registers(byte slaveId, ushort startAddress, ushort numOfPoints)
         {
             return await _modbus_master.ReadHoldingRegistersAsync(slaveId, startAddress, numOfPoints);
         }
-
+        public ushort[] read_holding_registers(byte slaveId, ushort startAddress, ushort numOfPoints)
+        {
+            return  _modbus_master.ReadHoldingRegisters(slaveId, startAddress, numOfPoints);
+        }
         public void disconnect_modbus_port()
         {
             if (_port.IsOpen)

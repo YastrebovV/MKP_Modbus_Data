@@ -57,6 +57,7 @@
             this.close_but = new System.Windows.Forms.Button();
             this.but_connect_plc = new System.Windows.Forms.Button();
             this.timer_check_connect_to_plc = new System.Windows.Forms.Timer(this.components);
+            this.timer_check_connect_com = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,7 +81,7 @@
             this.but_turn_on_data_coll.TabIndex = 7;
             this.but_turn_on_data_coll.Text = "Включить сбор\r\nданных";
             this.but_turn_on_data_coll.UseVisualStyleBackColor = true;
-            this.but_turn_on_data_coll.Click += new System.EventHandler(this.but_turn_on_data_coll_Click);
+            this.but_turn_on_data_coll.Click += new System.EventHandler(this.but_turn_on_data_coll_click);
             // 
             // panel1
             // 
@@ -109,13 +110,13 @@
             this.panel1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel1.Location = new System.Drawing.Point(14, 109);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(670, 171);
+            this.panel1.Size = new System.Drawing.Size(670, 160);
             this.panel1.TabIndex = 16;
             // 
             // lb_pv_id5
             // 
             this.lb_pv_id5.AutoSize = true;
-            this.lb_pv_id5.Location = new System.Drawing.Point(602, 13);
+            this.lb_pv_id5.Location = new System.Drawing.Point(380, 88);
             this.lb_pv_id5.Name = "lb_pv_id5";
             this.lb_pv_id5.Size = new System.Drawing.Size(16, 18);
             this.lb_pv_id5.TabIndex = 35;
@@ -124,7 +125,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(455, 13);
+            this.label15.Location = new System.Drawing.Point(233, 88);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(151, 18);
             this.label15.TabIndex = 34;
@@ -133,7 +134,7 @@
             // lb_sp_id5
             // 
             this.lb_sp_id5.AutoSize = true;
-            this.lb_sp_id5.Location = new System.Drawing.Point(602, 46);
+            this.lb_sp_id5.Location = new System.Drawing.Point(380, 121);
             this.lb_sp_id5.Name = "lb_sp_id5";
             this.lb_sp_id5.Size = new System.Drawing.Size(16, 18);
             this.lb_sp_id5.TabIndex = 33;
@@ -142,7 +143,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(455, 45);
+            this.label17.Location = new System.Drawing.Point(233, 120);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(152, 18);
             this.label17.TabIndex = 32;
@@ -151,7 +152,7 @@
             // lb_pv_id4
             // 
             this.lb_pv_id4.AutoSize = true;
-            this.lb_pv_id4.Location = new System.Drawing.Point(377, 87);
+            this.lb_pv_id4.Location = new System.Drawing.Point(155, 87);
             this.lb_pv_id4.Name = "lb_pv_id4";
             this.lb_pv_id4.Size = new System.Drawing.Size(16, 18);
             this.lb_pv_id4.TabIndex = 31;
@@ -160,7 +161,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(230, 87);
+            this.label11.Location = new System.Drawing.Point(8, 87);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(151, 18);
             this.label11.TabIndex = 30;
@@ -169,7 +170,7 @@
             // lb_sp_id4
             // 
             this.lb_sp_id4.AutoSize = true;
-            this.lb_sp_id4.Location = new System.Drawing.Point(377, 120);
+            this.lb_sp_id4.Location = new System.Drawing.Point(155, 120);
             this.lb_sp_id4.Name = "lb_sp_id4";
             this.lb_sp_id4.Size = new System.Drawing.Size(16, 18);
             this.lb_sp_id4.TabIndex = 29;
@@ -178,7 +179,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(230, 119);
+            this.label13.Location = new System.Drawing.Point(8, 119);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(152, 18);
             this.label13.TabIndex = 28;
@@ -187,7 +188,7 @@
             // lb_pv_id3
             // 
             this.lb_pv_id3.AutoSize = true;
-            this.lb_pv_id3.Location = new System.Drawing.Point(156, 87);
+            this.lb_pv_id3.Location = new System.Drawing.Point(601, 13);
             this.lb_pv_id3.Name = "lb_pv_id3";
             this.lb_pv_id3.Size = new System.Drawing.Size(16, 18);
             this.lb_pv_id3.TabIndex = 27;
@@ -196,7 +197,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 87);
+            this.label5.Location = new System.Drawing.Point(454, 13);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(151, 18);
             this.label5.TabIndex = 26;
@@ -205,7 +206,7 @@
             // lb_sp_id3
             // 
             this.lb_sp_id3.AutoSize = true;
-            this.lb_sp_id3.Location = new System.Drawing.Point(156, 120);
+            this.lb_sp_id3.Location = new System.Drawing.Point(601, 46);
             this.lb_sp_id3.Name = "lb_sp_id3";
             this.lb_sp_id3.Size = new System.Drawing.Size(16, 18);
             this.lb_sp_id3.TabIndex = 25;
@@ -214,7 +215,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(9, 119);
+            this.label8.Location = new System.Drawing.Point(454, 45);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(152, 18);
             this.label8.TabIndex = 24;
@@ -312,7 +313,7 @@
             this.min_but.Size = new System.Drawing.Size(38, 36);
             this.min_but.TabIndex = 19;
             this.min_but.UseVisualStyleBackColor = true;
-            this.min_but.Click += new System.EventHandler(this.min_but_Click);
+            this.min_but.Click += new System.EventHandler(this.min_but_click);
             // 
             // close_but
             // 
@@ -323,7 +324,7 @@
             this.close_but.Size = new System.Drawing.Size(38, 36);
             this.close_but.TabIndex = 18;
             this.close_but.UseVisualStyleBackColor = true;
-            this.close_but.Click += new System.EventHandler(this.close_but_Click);
+            this.close_but.Click += new System.EventHandler(this.close_but_click);
             // 
             // but_connect_plc
             // 
@@ -334,19 +335,26 @@
             this.but_connect_plc.TabIndex = 20;
             this.but_connect_plc.Text = "Подключиться \r\nк ПЛК";
             this.but_connect_plc.UseVisualStyleBackColor = true;
-            this.but_connect_plc.Click += new System.EventHandler(this.but_connect_plc_Click);
+            this.but_connect_plc.Click += new System.EventHandler(this.but_connect_plc_click);
             // 
             // timer_check_connect_to_plc
             // 
+            this.timer_check_connect_to_plc.Enabled = true;
             this.timer_check_connect_to_plc.Interval = 1000;
             this.timer_check_connect_to_plc.Tick += new System.EventHandler(this.timer_check_connect_to_plc_Tick);
+            // 
+            // timer_check_connect_com
+            // 
+            this.timer_check_connect_com.Enabled = true;
+            this.timer_check_connect_com.Interval = 1000;
+            this.timer_check_connect_com.Tick += new System.EventHandler(this.timer_check_connect_com_Tick);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            this.ClientSize = new System.Drawing.Size(702, 296);
+            this.ClientSize = new System.Drawing.Size(702, 290);
             this.Controls.Add(this.but_connect_plc);
             this.Controls.Add(this.min_but);
             this.Controls.Add(this.close_but);
@@ -357,9 +365,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Main";
             this.Text = "Main";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
-            this.Load += new System.EventHandler(this.Main_Load);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Main_MouseDown);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.main_form_closing);
+            this.Load += new System.EventHandler(this.main_load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.main_mouse_down);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -397,6 +405,7 @@
         private System.Windows.Forms.Button min_but;
         private System.Windows.Forms.Button but_connect_plc;
         private System.Windows.Forms.Timer timer_check_connect_to_plc;
+        private System.Windows.Forms.Timer timer_check_connect_com;
     }
 }
 

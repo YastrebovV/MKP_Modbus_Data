@@ -41,7 +41,7 @@ namespace MKP_Modbus_Data
         IniClass _ini = new IniClass();
 
         bool tasks_started = false;  
-        bool connected = false;
+        //bool connected = false;
 
         string mkp1_run_status_db_adr;
         string mkp1_pv_db_adr;
@@ -61,6 +61,9 @@ namespace MKP_Modbus_Data
 
         string life_bit_db_adr;
 
+        /*
+         * Загрузка данных из ini файла
+         */
         private void load_data_from_inifile()
         {
             mkp1_run_status_db_adr = _ini.IniReadValue("PLC_Info", "Mkp1RunState");
@@ -85,63 +88,43 @@ namespace MKP_Modbus_Data
 
             life_bit_db_adr = _ini.IniReadValue("PLC_Info", "LifeBit");
         }
-        private void connect_to_comport(ref bool connected)
+        /*
+         * Получение данных с терморегулятора
+         */
+        private ushort[] get_data_from_mkp(byte slave_id, ushort pv_address, ushort sp_address, ushort state_address)
         {
-            if (!connected)
-            {
-                if (_modbusRTU.connect_modbus_port())
-                {
-                    _modbusRTU.create_modbus_master();
-                    but_port_connect.Text = "Отключиться от Com порта";
-                    connected = true;
-                }
-            }
-            else
-            {
-                _modbusRTU.disconnect_modbus_port();
-                but_port_connect.Text = "Подключиться к Com порту";
-                connected = false;
-            }
-        }
-        private async Task<ushort> get_program_state(byte slave_id, ushort state_address)
-        {
-            ushort[] program_run = new ushort[1];
-            try
-            {
-                program_run = await _modbusRTU.read_input_registers(slave_id, state_address, 1).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                program_run[0] = 0;
-            }
-           return program_run[0];
-        }
-        private async Task<ushort[]> get_data_from_MKP(byte slave_id, ushort pv_address, ushort sp_address)
-        {
-            ushort[] MKP_data = new ushort[2];
+            ushort[] MKP_data = new ushort[3];
             ushort[] pv = null;
             ushort[] sp = null;
+            ushort[] state= null;
             try
             {
-                pv = await _modbusRTU.read_input_registers(slave_id, pv_address, 1).ConfigureAwait(false);
-                sp = await _modbusRTU.read_input_registers(slave_id, sp_address, 1).ConfigureAwait(false);
+                pv =  _modbusRTU.read_input_registers(slave_id, pv_address, 1);
+                sp =  _modbusRTU.read_input_registers(slave_id, sp_address, 1);
+                state = _modbusRTU.read_input_registers(slave_id, state_address, 1);
 
                 MKP_data[0] = pv[0];
-                MKP_data[1] = sp[0]; 
+                MKP_data[1] = sp[0];
+                MKP_data[2] = state[0];
             }
             catch (Exception)
             {
                 MKP_data[0] = 0;
                 MKP_data[1] = 0;
+                MKP_data[2] = 0;
             }
             return MKP_data;
         }
+        /*
+         * Получение и обработка данных с терморегуляторов
+         */
         private async Task get_data_from_all_mkp()
         {
             await get_data_from_all_mkp(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false);
         }
         private async Task get_data_from_all_mkp(CancellationToken cancel_token)
         {
+            ushort lenght_arr = 3;
             while (true)
             {
                 if (cancel_token.IsCancellationRequested)
@@ -149,23 +132,17 @@ namespace MKP_Modbus_Data
                     return;
                 }
 
-                ushort[] MKP_1_data = null;
-                ushort[] MKP_2_data = null;
-                ushort[] MKP_3_data = null;
-                ushort[] MKP_4_data = null;
-                ushort[] MKP_5_data = null;
+                ushort[] MKP_1_data = new ushort[lenght_arr];
+                ushort[] MKP_2_data = new ushort[lenght_arr];
+                ushort[] MKP_3_data = new ushort[lenght_arr];
+                ushort[] MKP_4_data = new ushort[lenght_arr];
+                ushort[] MKP_5_data = new ushort[lenght_arr];
 
-                ushort MKR_1_state = await get_program_state(1, 91);
-                ushort MKR_2_state = await get_program_state(2, 91);
-                ushort MKR_3_state = await get_program_state(3, 91);
-                ushort MKR_4_state = await get_program_state(4, 91);
-                ushort MKR_5_state = await get_program_state(5, 91);
-
-                MKP_1_data = await get_data_from_MKP(1, 123, 137);
-                MKP_2_data = await get_data_from_MKP(2, 123, 137);
-                MKP_3_data = await get_data_from_MKP(3, 123, 137);
-                MKP_4_data = await get_data_from_MKP(4, 123, 137);
-                MKP_5_data = await get_data_from_MKP(5, 123, 137);
+                MKP_1_data =  get_data_from_mkp(1, 123, 137, 91);
+                MKP_2_data =  get_data_from_mkp(2, 123, 137, 91);
+                MKP_3_data =  get_data_from_mkp(3, 123, 137, 91);
+                MKP_4_data =  get_data_from_mkp(4, 123, 137, 91);
+                MKP_5_data =  get_data_from_mkp(5, 123, 137, 91);
 
                 lb_pv_id1.Invoke((Action)delegate { lb_pv_id1.Text = MKP_1_data[0].ToString(); });
                 lb_sp_id1.Invoke((Action)delegate { lb_sp_id1.Text = MKP_1_data[1].ToString(); });
@@ -184,23 +161,23 @@ namespace MKP_Modbus_Data
 
                 if (_plc_control.get_state_plc_connected())
                 {
-                    await _plc_control.write_db_async(mkp1_run_status_db_adr, MKR_1_state);
+                    await _plc_control.write_db_async(mkp1_run_status_db_adr, MKP_1_data[2]);
                     await _plc_control.write_db_async(mkp1_pv_db_adr, MKP_1_data[0]);
                     await _plc_control.write_db_async(mkp1_sp_db_adr, MKP_1_data[1]);
 
-                    await _plc_control.write_db_async(mkp2_run_status_db_adr, MKR_2_state);
+                    await _plc_control.write_db_async(mkp2_run_status_db_adr, MKP_2_data[2]);
                     await _plc_control.write_db_async(mkp2_pv_db_adr, MKP_2_data[0]);
                     await _plc_control.write_db_async(mkp2_sp_db_adr, MKP_2_data[1]);
 
-                    await _plc_control.write_db_async(mkp3_run_status_db_adr, MKR_3_state);
+                    await _plc_control.write_db_async(mkp3_run_status_db_adr, MKP_3_data[2]);
                     await _plc_control.write_db_async(mkp3_pv_db_adr, MKP_3_data[0]);
                     await _plc_control.write_db_async(mkp3_sp_db_adr, MKP_3_data[1]);
 
-                    await _plc_control.write_db_async(mkp4_run_status_db_adr, MKR_4_state);
+                    await _plc_control.write_db_async(mkp4_run_status_db_adr, MKP_4_data[2]);
                     await _plc_control.write_db_async(mkp4_pv_db_adr, MKP_4_data[0]);
                     await _plc_control.write_db_async(mkp4_sp_db_adr, MKP_4_data[1]);
 
-                    await _plc_control.write_db_async(mkp5_run_status_db_adr, MKR_5_state);
+                    await _plc_control.write_db_async(mkp5_run_status_db_adr, MKP_5_data[2]);
                     await _plc_control.write_db_async(mkp5_pv_db_adr, MKP_5_data[0]);
                     await _plc_control.write_db_async(mkp5_sp_db_adr, MKP_5_data[1]);
 
@@ -217,7 +194,15 @@ namespace MKP_Modbus_Data
                 Task.Delay(1000).Wait();
             }
         }
-        private void Main_Load(object sender, EventArgs e)
+        /*
+         * Метод обработки загрузки формы
+         */
+
+        private async Task connect_async_to_plc()
+        {
+            await _plc_control.connect_async(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false);
+        }
+        private void main_load(object sender, EventArgs e)
         {
             CpuType _cpu_Type = CpuType.S7300;
             ModbusRTU.PortSettings _port_settings = new ModbusRTU.PortSettings();
@@ -278,34 +263,70 @@ namespace MKP_Modbus_Data
             _cancel_token = new CancellationTokenSource();
 
             load_data_from_inifile();
-
+          
             try
             {
-                connect_to_comport(ref connected);
+                /*Попытка подключения к com порту*/
+                but_port_connect.PerformClick();
 
-                timer_check_connect_to_plc.Enabled = true;
-                timer_check_connect_to_plc.Start();
-
-                if (connected)
+                if (_modbusRTU.get_port_state())
+                {              
+                    /*
+                     * Если подключение к com порту прошло успешно, 
+                     * запускаем метод сбора данных с датчиков
+                     */
                     but_turn_on_data_coll.PerformClick();
+                    /*
+                    * Попытка подключения к ПЛК
+                    */
+                    but_connect_plc.PerformClick();
+                }              
             }
-            catch (Exception ex){}
+            catch (Exception){}
          
         }
-        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        /*
+         * Метод обработки закрытия формы
+         */
+        private void main_form_closing(object sender, FormClosingEventArgs e)
         {
             _plc_control.disconnect();
             _modbusRTU.disconnect_modbus_port();
         }
         private void but_port_connect_click(object sender, EventArgs e)
         {
-            connect_to_comport(ref connected);
+            if (!_modbusRTU.get_port_state())
+            {
+                if (_modbusRTU.connect_modbus_port())
+                {
+                    _modbusRTU.create_modbus_master();
+                    but_port_connect.Text = "Отключиться от Com порта";
+                    timer_check_connect_com.Start();
+                }
+            }
+            else
+            {
+                _modbusRTU.disconnect_modbus_port();
+                but_port_connect.Text = "Подключиться к Com порту";
+                timer_check_connect_com.Stop();
+            }
         }
-        private async void but_connect_plc_Click(object sender, EventArgs e)
+        private async void but_connect_plc_click(object sender, EventArgs e)
         {
-            await _plc_control.connect_async(_cancel_token.Token).ConfigureAwait(continueOnCapturedContext: false);
+            if (!_plc_control.get_state_plc_connected())
+            {
+                await Task.Run(connect_async_to_plc);
+                but_connect_plc.Text = "Отключиться \r\nот ПЛК";
+                timer_check_connect_to_plc.Start();
+            }
+            else
+            {
+                _plc_control.disconnect();
+                but_connect_plc.Text = "Подключиться \r\nк ПЛК";
+                timer_check_connect_to_plc.Stop();
+            }         
         }
-        private async void but_turn_on_data_coll_Click(object sender, EventArgs e)
+        private async void but_turn_on_data_coll_click(object sender, EventArgs e)
         {
             if (tasks_started)
             {
@@ -317,26 +338,26 @@ namespace MKP_Modbus_Data
                 return;
             }
 
-            if (connected && !tasks_started)
+            if (_modbusRTU.get_port_state() && !tasks_started)
             {
                 _cancel_token = new CancellationTokenSource();
                 tasks_started = true;
                 but_turn_on_data_coll.Text = "Отключить сбор \n данных";
 
-                await Task.Run(get_data_from_all_mkp);
-               
+                await Task.Run(get_data_from_all_mkp);          
+                await Task.Run(connect_async_to_plc);
                 return;
             }
         }
-        private void close_but_Click(object sender, EventArgs e)
+        private void close_but_click(object sender, EventArgs e)
         {
             Close();
         }
-        private void min_but_Click(object sender, EventArgs e)
+        private void min_but_click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
-        private void Main_MouseDown(object sender, MouseEventArgs e)
+        private void main_mouse_down(object sender, MouseEventArgs e)
         {
             base.Capture = false;
             Message m = Message.Create(base.Handle, 0xa1, new IntPtr(2), IntPtr.Zero);
@@ -344,13 +365,18 @@ namespace MKP_Modbus_Data
         }
         private void timer_check_connect_to_plc_Tick(object sender, EventArgs e)
         {
-            if (_plc_control.get_state_plc_connected())
+            if (!_plc_control.get_state_plc_connected())
             {
-                but_connect_plc.Text = "Отключиться \r\nот ПЛК";
-            }
-            else
-            {
+                timer_check_connect_to_plc.Stop();
                 but_connect_plc.Text = "Подключиться \r\nк ПЛК";
+            }
+        }
+        private void timer_check_connect_com_Tick(object sender, EventArgs e)
+        {
+            if (!_modbusRTU.get_port_state())
+            {
+                timer_check_connect_com.Stop();
+                but_port_connect.Text = "Подключиться к Com порту";       
             }
         }
     }
