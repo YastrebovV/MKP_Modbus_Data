@@ -3,11 +3,11 @@
   "WorkspaceRootPath": "E:\\PROGRAMMING\\GIT\\MKP_Modbus_Data\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{456B8384-3BF0-4551-9811-CEAFB9DB6AD8}|MKP_Modbus_Data.csproj|e:\\programming\\git\\mkp_modbus_data\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{456B8384-3BF0-4551-9811-CEAFB9DB6AD8}|MKP_Modbus_Data.csproj|E:\\PROGRAMMING\\GIT\\MKP_Modbus_Data\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{456B8384-3BF0-4551-9811-CEAFB9DB6AD8}|MKP_Modbus_Data.csproj|solutionrelative:main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{456B8384-3BF0-4551-9811-CEAFB9DB6AD8}|MKP_Modbus_Data.csproj|E:\\PROGRAMMING\\GIT\\MKP_Modbus_Data\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{456B8384-3BF0-4551-9811-CEAFB9DB6AD8}|MKP_Modbus_Data.csproj|e:\\programming\\git\\mkp_modbus_data\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{456B8384-3BF0-4551-9811-CEAFB9DB6AD8}|MKP_Modbus_Data.csproj|solutionrelative:main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -28,7 +28,7 @@
               "RelativeDocumentMoniker": "Main.cs",
               "ToolTip": "E:\\PROGRAMMING\\GIT\\MKP_Modbus_Data\\Main.cs",
               "RelativeToolTip": "Main.cs",
-              "ViewState": "AQIAABMAAAAAAAAAAAAUwI0AAAAJAAAA",
+              "ViewState": "AQIAAFkBAAAAAAAAAAAowGEAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-15T13:04:00.668Z",
               "EditorCaption": ""
